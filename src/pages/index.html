@@ -1,0 +1,80 @@
+---
+title: 2026
+outputPath: index.html
+noHero: true
+extraScripts:
+---
+
+  <main id="main-content">
+
+    <!-- ============================================================
+         1. HERO
+         TODO 시안 확정 후: 배경(영상/이미지), 타이틀 이미지, 일시·장소, CTA
+         ============================================================ -->
+    <section class="forum-hero">
+      <div class="forum-hero-bg" aria-hidden="true">
+        <!-- 배경 영상을 쓸 경우: main.js가 뷰포트에 맞춰 desktop/mobile 소스를 고른다
+        <video autoplay muted loop playsinline
+               data-src-desktop="/images/hero_bg_video.mp4"
+               data-src-mobile="/images/hero_bg_mobile.mp4"></video>
+        -->
+      </div>
+      <div class="forum-hero-inner">
+        <p class="forum-hero-tag">{{siteName}}</p>
+        <h1 class="forum-hero-title">
+          <!-- TODO 시안의 타이틀 이미지 또는 텍스트 -->
+        </h1>
+        <p class="forum-hero-meta">
+          <!-- TODO 2026. 0. 00.(0) 00:00 · 장소 -->
+        </p>
+        <div class="forum-hero-cta-wrap">
+          <a class="forum-hero-cta" href="#registration">사전등록</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         2. SPEAKERS
+         ============================================================ -->
+    <section class="forum-speakers" id="speakers">
+      <div class="forum-section-inner">
+        <h2 class="forum-section-title">연사소개</h2>
+        <div class="forum-speaker-grid">
+          <!-- TODO 연사 카드 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3. PROGRAM
+         ============================================================ -->
+    <section class="forum-program" id="program">
+      <div class="forum-section-inner">
+        <h2 class="forum-section-title">프로그램</h2>
+        <!-- TODO 세션 탭 + 프로그램 표 -->
+      </div>
+    </section>
+
+    <!-- ============================================================
+         4. REGISTRATION
+         사전등록 폼. 백엔드는 apps-script/Code.gs (Google Apps Script).
+         배포 후 발급되는 /exec URL을 js/main.js의 GAS_URL에 넣는다.
+         ============================================================ -->
+    <section class="forum-registration" id="registration">
+      <div class="forum-section-inner">
+        <h2 class="forum-section-title">사전등록</h2>
+        <!-- TODO 참가신청 / 확인 탭 + 폼 -->
+      </div>
+    </section>
+
+    <!-- ============================================================
+         5. LOCATION
+         ============================================================ -->
+    <section class="forum-location" id="location">
+      <div class="forum-section-inner">
+        <h2 class="forum-section-title">오시는 길</h2>
+        <!-- TODO 지도, 주소, 교통편 -->
+      </div>
+    </section>
+
+  </main>

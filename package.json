@@ -1,0 +1,8 @@
+{
+  "name": "forum-2026-invest",
+  "private": true,
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node build.js --watch"
+  }
+}
