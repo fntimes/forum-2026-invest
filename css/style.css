@@ -359,9 +359,6 @@ body { margin: 0; padding: 0; }
 }
 /* flex 아이템에 좌우 auto 마진을 주면 stretch가 풀려 fit-content로 줄고,
    안쪽 이미지의 % max-width가 자기 폭 기준으로 계산돼 버린다. 마진을 두지 않는다. */
-/* 히어로 안 로고 — 모바일에서만 쓴다 */
-.forum-hero-logo { display: none; }
-
 .forum-hero-title { margin: 0; }
 .forum-hero-title img {
   width: 420px;
@@ -1534,9 +1531,9 @@ body.forum-modal-open { overflow: hidden; }
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 52px;
+    height: 88px;
     padding: 0 16px;
-    gap: 12px;
+    gap: 14px;
   }
   .forum-logo { padding-bottom: 0; }
   .forum-logo .logo-mark { height: 30px; }
@@ -1557,31 +1554,33 @@ body.forum-modal-open { overflow: hidden; }
   }
   .forum-nav a { font-size: 12px; font-weight: 600; letter-spacing: -0.5px; }
 
-  /* 모바일 헤더는 이미 압축 배치라 스크롤해도 형태를 바꾸지 않는다 */
+  /* 모바일 헤더는 전 페이지·전 상태에서 동일하다.
+     스크롤에 따른 변화도, 전환 효과도 두지 않는다. */
+  .forum-header,
+  .forum-header-inner,
+  .forum-header-right,
+  .forum-nav,
+  .forum-logo,
+  .forum-logo .logo-mark,
+  .forum-logo .logo-text { transition: none; }
+  .forum-header.scrolled { box-shadow: none; }
+  /* 스크롤 상태도 기본과 동일 */
   .forum-header.scrolled .forum-header-inner {
-    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 52px;
+    height: 88px;
     padding: 0 16px;
-    gap: 12px;
+    gap: 14px;
   }
-  .forum-header.scrolled .forum-logo { align-items: flex-end; padding-bottom: 0; }
-  .forum-header.scrolled .forum-logo .logo-mark { height: 30px; }
-  .forum-header.scrolled .forum-logo .logo-text { height: 27px; }
-  .forum-header.scrolled .forum-header-right {
-    flex-direction: column;
-    width: 100%;
-    gap: 0;
-  }
+  .forum-header.scrolled .forum-logo { padding-bottom: 0; }
+  .forum-header.scrolled .forum-logo .logo-mark { height: 26px; }
+  .forum-header.scrolled .forum-logo .logo-text { height: 23px; }
+  .forum-header.scrolled .forum-header-right { flex-direction: column; width: 100%; gap: 0; }
+  .forum-header.scrolled .forum-header-utility { display: none; }
   .forum-header.scrolled .forum-nav {
-    position: static;
-    transform: none;
-    left: auto;
-    top: auto;
-    padding-top: 0;
-    gap: 6px 14px;
+    position: static; transform: none; left: auto; top: auto;
+    padding-top: 0; justify-content: center; gap: 6px 9px;
   }
   .forum-header.scrolled .forum-nav a { font-size: 12px; letter-spacing: -0.5px; }
 
@@ -1619,21 +1618,12 @@ body.forum-modal-open { overflow: hidden; }
     --hero-bg-y: 50%;
   }
   .forum-hero-inner {
-    padding: 242px 20px 0;         /* 시안의 로고 위치 */
+    padding: 306px 20px 0;         /* 시안의 타이틀 위치 */
     justify-content: flex-start;   /* 패딩으로 위치를 잡는다 */
   }
-  /* 헤더에서 뺀 로고를 타이틀 위에 둔다 (시안 242px 지점, 높이 32px) */
-  .forum-hero-logo {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 32px;
-  }
-  .forum-hero-logo .logo-mark { height: 32px; width: auto; }
-  .forum-hero-logo .logo-text { height: 28px; width: auto; }
-  /* 헤더는 메뉴만 */
-  .forum-logo { display: none; }
+  .forum-logo { display: flex; padding-bottom: 0; }
+  .forum-logo .logo-mark { height: 26px; }
+  .forum-logo .logo-text { height: 23px; }
   .forum-hero-title img { width: 224px; max-width: none; }
   .forum-hero-datetime { margin-top: 68px; }
   .forum-hero-datetime img { width: 113px; max-width: none; }
@@ -1690,7 +1680,7 @@ body.forum-modal-open { overflow: hidden; }
   }
   /* 배경 규칙은 데스크톱과 동일(inset:0 + cover) — 별도 지정 불필요 */
   .forum-invitation-hero-inner {
-    padding: 74px 20px 10px;    /* 헤더 52px + 위 여백 22px */
+    padding: 110px 20px 10px;   /* 헤더 88px + 위 여백 22px */
     justify-content: flex-start;
     height: auto;
   }
