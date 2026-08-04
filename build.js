@@ -39,21 +39,15 @@ function parsePage(filePath) {
   return { meta, body };
 }
 
-// 3. Inject GNB active states into header
-function injectGnbActive(headerHtml, gnbActive, megaActiveHref) {
-  if (gnbActive) {
-    headerHtml = headerHtml.replace(
-      `<a href="#">${gnbActive}</a>`,
-      `<a href="#" class="gnb-active">${gnbActive}</a>`
-    );
-  }
-  if (megaActiveHref) {
-    headerHtml = headerHtml.replace(
-      `<a href="${megaActiveHref}">`,
-      `<a href="${megaActiveHref}" class="mega-active">`
-    );
-  }
-  return headerHtml;
+// 3. Inject GNB active state into header
+// front-matter의 gnbActive에 해당 메뉴의 href를 적으면 그 링크에 클래스가 붙는다.
+//   예) gnbActive: /invitation
+function injectGnbActive(headerHtml, gnbActive) {
+  if (!gnbActive) return headerHtml;
+  return headerHtml.replace(
+    `<a href="${gnbActive}">`,
+    `<a href="${gnbActive}" class="gnb-active" aria-current="page">`
+  );
 }
 
 // 4. Assemble page
@@ -72,7 +66,7 @@ function buildPage(pagePath) {
   if (meta.raw === 'true') {
     html = body;
   } else {
-    let header = injectGnbActive(partials['header'], meta.gnbActive, meta.megaActiveHref);
+    let header = injectGnbActive(partials['header'], meta.gnbActive);
 
     html = partials['head']
       + '\n' + header
