@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // Hero background video — pick mobile or desktop source based on viewport
-  document.querySelectorAll('.forum-hero-bg video[data-src-desktop]').forEach(function(v) {
+  // 배경 영상 — 뷰포트에 맞춰 모바일/데스크톱 소스를 고른다
+  // (히어로, 연사소개 등 data-src-desktop을 가진 모든 video에 적용)
+  document.querySelectorAll('video[data-src-desktop]').forEach(function(v) {
     var mobile  = v.getAttribute('data-src-mobile');
     var desktop = v.getAttribute('data-src-desktop');
     var src = (window.matchMedia('(max-width: 720px)').matches && mobile) ? mobile : desktop;
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Sticky header — collapse to single row on scroll
   var header = document.querySelector('.forum-header');
+
   var onScroll = function() {
     if (!header) return;
     if (window.scrollY > 40) {
@@ -88,7 +90,8 @@ document.addEventListener('DOMContentLoaded', function () {
       document.body.classList.remove('forum-modal-open');
     };
 
-    document.querySelectorAll('.forum-speaker-card').forEach(function(card) {
+    /* 엠블럼 카드(div)는 제외 — 프로필 데이터가 없다 */
+    document.querySelectorAll('button.forum-speaker-card').forEach(function(card) {
       card.addEventListener('click', function() { openModal(card); });
     });
 

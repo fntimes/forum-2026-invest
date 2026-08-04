@@ -1,23 +1,29 @@
 /* ============================================================
-   2026 투자포럼 — Forum Page Styles
+   2026 한국금융 투자포럼 — Forum Page Styles
    Pretendard: CDN (head.html에서 로드)
 
-   구성: 0. 브랜드 토큰 / 1. 폰트 / 2. Reset·Base / 3. HEADER·GNB
-        4. 섹션 공통 / 5. FOOTER / 6. RESPONSIVE
-   섹션별(HERO/SPEAKERS/PROGRAM/REGISTRATION/LOCATION) 스타일은
-   시안 확정 후 4번과 5번 사이에 번호를 붙여 추가한다.
+   0. 브랜드 토큰 / 1. 폰트 / 2. Reset·Base / 3. HEADER·GNB
+   4. 섹션 공통 / 5. HERO / 6. SPEAKERS / 7. PROGRAM
+   8. REGISTRATION / 9. LOCATION / 10. FOOTER / 11. RESPONSIVE
    ============================================================ */
 
 /* ============================================================
-   0. 브랜드 토큰 — 시안 컬러 확정되면 여기만 고친다
+   0. 브랜드 토큰
    ============================================================ */
 :root {
-  --forum-bg: rgb(0, 53, 122);        /* TODO 시안 배경색 */
-  --forum-header-bg: rgb(0, 53, 122); /* TODO 시안 헤더색 */
-  --forum-accent: #ff5757;            /* TODO 시안 포인트색 */
+  --forum-purple: rgb(94, 23, 235);  /* 표 강조 — 상하 굵은 선, 강연 제목 */
+  --forum-blue: #004aad;     /* 헤더 그라데이션 왼쪽 (시안 SVG 값) */
+  --forum-violet: #cb6ce6;   /* 헤더 그라데이션 오른쪽 (시안 SVG 값) */
+  --forum-time: rgb(56, 182, 255);   /* 프로그램 시간 */
+  --forum-accent: #ff3b3b;   /* 필수 표시, 개인정보처리방침 */
   --forum-text: #1a1a2e;
+  --forum-muted: #6b7280;
   --forum-on-dark: #fff;
+  --forum-program-bg: #dfe6f9;
+  --forum-dark: #0b100d;
   --forum-max-width: 1200px;
+  /* 헤더는 본문보다 넓게 — 상반기(1200px)보다 여유를 둔다 */
+  --forum-header-width: 1360px;
 }
 
 /* ============================================================
@@ -78,10 +84,22 @@
   font-display: swap;
 }
 
-/* 본문 섹션은 Escoredream, 헤더·푸터는 Pretendard */
+/* ----- KIMM (한국기계연구원체) — GNB 전용 ----- */
+@font-face {
+  font-family: 'KoreaInstituteOfMachineryAndMaterials';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KIMM_Light.woff2') format('woff2');
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'KoreaInstituteOfMachineryAndMaterials';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/KIMM_Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
 .forum-speakers,
 .forum-program,
-.forum-registration,
 .forum-location {
   font-family: 'Escoredream', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
@@ -89,13 +107,14 @@
   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
+
 /* ============================================================
    2. Reset / Base
    ============================================================ */
 body { margin: 0; padding: 0; }
 .forum-page * { margin: 0; padding: 0; box-sizing: border-box; }
 .forum-page {
-  background: var(--forum-bg);
+  background: #fff;
   color: var(--forum-text);
   line-height: 1.6;
   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -105,14 +124,14 @@ body { margin: 0; padding: 0; }
 }
 .forum-page img { display: block; max-width: 100%; height: auto; }
 .forum-page a { color: inherit; text-decoration: none; }
-.forum-page [id] { scroll-margin-top: 80px; }
+.forum-page [id] { scroll-margin-top: 100px; }
+.forum-page ul, .forum-page ol { list-style: none; }
 
 .forum-page .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
 }
 
-/* 키보드 사용자용 본문 바로가기 */
 .skip-link {
   position: absolute;
   left: -9999px;
@@ -125,7 +144,6 @@ body { margin: 0; padding: 0; }
 }
 .skip-link:focus { left: 0; }
 
-/* Utility: hidden on desktop, shown on mobile */
 .forum-page .mobile-break { display: none; }
 
 /* ============================================================
@@ -135,25 +153,38 @@ body { margin: 0; padding: 0; }
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: var(--forum-header-bg);
-  transition: background 0.3s ease, padding 0.3s ease, box-shadow 0.3s ease;
+  background: linear-gradient(90deg, var(--forum-blue) 0%, var(--forum-violet) 100%);
+  transition: padding 0.3s ease, box-shadow 0.3s ease;
 }
 .forum-header-inner {
-  max-width: var(--forum-max-width);
+  max-width: var(--forum-header-width);
   margin: 0 auto;
-  padding: 24px 40px;
+  height: 136px;              /* 헤더 높이 고정 */
+  padding: 0 48px;
   display: flex;
   align-items: stretch;
   gap: 48px;
-  transition: max-width 0.3s ease, padding 0.3s ease;
+  transition: max-width 0.3s ease, height 0.3s ease, padding 0.3s ease;
 }
+/* 로고는 아래쪽 정렬 — 위쪽에 헤더 높이의 약 1/3이 빈 공간으로 남고
+   로고 밑선이 GNB 줄과 맞는다. (부모가 align-items: stretch라 가능) */
 .forum-logo {
   flex-shrink: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  gap: 12px;
+  /* 로고 밑선을 GNB '글자' 하단에 맞춘다.
+     우측 스택 아랫변이 바닥에서 22px, 거기서 GNB 줄상자의 여백
+     (line-height 1.6에서 생기는 위아래 여유 + 디센더) 만큼 올린다. */
+  padding-bottom: 27px;
 }
-.forum-logo img {
-  height: 88px;
+.forum-logo .logo-mark {
+  height: 54px;
+  width: auto;
+  transition: height 0.3s ease;
+}
+.forum-logo .logo-text {
+  height: 46px;
   width: auto;
   transition: height 0.3s ease;
 }
@@ -168,7 +199,7 @@ body { margin: 0; padding: 0; }
   transition: gap 0.3s ease;
 }
 
-/* Top row: utility links (한국금융 / Wealth / 매체소개 / 지난포럼) */
+/* Top row: utility links */
 .forum-header-utility {
   display: flex;
   align-items: center;
@@ -184,6 +215,22 @@ body { margin: 0; padding: 0; }
   transition: opacity 0.2s;
 }
 .forum-header-utility a:hover { opacity: 0.7; }
+.forum-header-utility .utility-plain {
+  font-family: 'KoreaInstituteOfMachineryAndMaterials', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  color: #fff;          /* 한국금융 로고 글자와 동일한 순백 */
+  font-size: 15px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  margin-right: 14px;   /* 오른쪽 한국금융 로고와 간격 확보 */
+  position: relative;
+  top: 1px;             /* 로고 이미지들과 밑선을 맞춘다 */
+}
+.forum-header-utility .utility-pill {
+  background: #1c2a5e;
+  border-radius: 6px;
+  padding: 2px 16px;
+  font-size: 17px;
+}
 .forum-header-utility .divider {
   color: rgba(255, 255, 255, 0.4);
   font-size: 13px;
@@ -198,34 +245,37 @@ body { margin: 0; padding: 0; }
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 80px;
+  gap: 88px;
   padding-top: 14px;
   transition: padding 0.3s ease, gap 0.3s ease;
 }
 .forum-nav a {
+  font-family: 'KoreaInstituteOfMachineryAndMaterials', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   color: var(--forum-on-dark);
-  font-size: 21px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.3px;
   white-space: nowrap;
   transition: opacity 0.2s;
 }
 .forum-nav a:hover { opacity: 0.7; }
+.forum-nav a.gnb-active { text-decoration: underline; text-underline-offset: 6px; }
 
 /* ===== Scrolled state — collapse to one row ===== */
 .forum-header.scrolled {
-  background: var(--forum-header-bg);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
 .forum-header.scrolled .forum-header-inner {
   max-width: none;
-  padding: 14px 48px;
+  height: 76px;
+  padding: 0 48px;
   align-items: center;
   position: relative;
 }
-.forum-header.scrolled .forum-logo img {
-  height: 56px;
-}
+/* 한 줄로 접힌 상태에서는 로고도 세로 가운데 정렬 */
+.forum-header.scrolled .forum-logo { align-items: center; padding-bottom: 0; }
+.forum-header.scrolled .forum-logo .logo-mark { height: 42px; }
+.forum-header.scrolled .forum-logo .logo-text { height: 36px; }
 .forum-header.scrolled .forum-header-right {
   flex-direction: row;
   align-items: center;
@@ -238,32 +288,728 @@ body { margin: 0; padding: 0; }
   top: 50%;
   transform: translate(-50%, -50%);
   padding-top: 0;
-  gap: 64px;
+  gap: 68px;
 }
-.forum-header.scrolled .forum-header-utility {
-  gap: 14px;
-}
-.forum-header.scrolled .forum-header-utility img {
-  height: 25px;
-}
+.forum-header.scrolled .forum-header-utility { gap: 14px; }
+.forum-header.scrolled .forum-header-utility img { height: 25px; }
 
 /* ============================================================
-   4. 섹션 공통 셸
+   4. 섹션 공통
    ============================================================ */
 .forum-section-inner {
   max-width: var(--forum-max-width);
   margin: 0 auto;
-  padding: 100px 40px;
+  padding: 90px 40px;
 }
 .forum-section-title {
-  font-size: 40px;
+  font-size: 46px;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 56px;
+  margin-bottom: 60px;
 }
 
 /* ============================================================
-   5. FOOTER
+   5. HERO
+   ============================================================ */
+/* 영상이 중앙에 원이 박힌 완성 아트워크라 어떤 방식이든 화면 폭에 따라
+   원 크기가 변한다(영상 교체 불가). 절충안:
+   - 섹션 높이는 고정하고 배경은 cover로 항상 꽉 채워 여백을 없앤다
+   - 잘림 기준을 아래쪽(--hero-bg-y)에 두어, 원이 커져도 위로 자라게 한다
+     → 아래쪽 후원 영역을 침범하지 않는다 */
+.forum-hero {
+  --hero-bg-y: 44%;          /* 세로 잘림 기준. 100%=아래 맞춤, 0%=위 맞춤 */
+  --hero-bg-shift: 2.92%;    /* 영상 원의 가로 치우침 보정 (박스를 넓혀 상쇄) */
+  position: relative;
+  margin-top: 136px;         /* 고정 헤더 높이만큼 */
+  height: 860px;             /* 섹션 높이 고정 */
+  overflow: hidden;
+  background: #dfe4f0;       /* 영상 로드 전 폴백 */
+}
+.forum-hero-bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: calc(-1 * var(--hero-bg-shift));
+  z-index: 0;
+}
+.forum-hero-bg video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center var(--hero-bg-y);
+}
+/* 콘텐츠는 영상 위에 겹쳐 세로 가운데 정렬 */
+.forum-hero-inner {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: var(--forum-max-width);
+  margin: 0 auto;
+  padding: 48px;
+  /* 메인 그룹(타이틀·일시·버튼) 세로 위치 손잡이.
+     가운데 정렬이라 늘린 값의 절반만큼 위아래로 움직인다. */
+  padding-bottom: 200px;
+  text-align: center;
+}
+/* flex 아이템에 좌우 auto 마진을 주면 stretch가 풀려 fit-content로 줄고,
+   안쪽 이미지의 % max-width가 자기 폭 기준으로 계산돼 버린다. 마진을 두지 않는다. */
+/* 히어로 안 로고 — 모바일에서만 쓴다 */
+.forum-hero-logo { display: none; }
+
+.forum-hero-title { margin: 0; }
+.forum-hero-title img {
+  width: 420px;
+  margin: 0 auto;
+}
+
+.forum-hero-datetime { margin-top: 26px; }
+.forum-hero-datetime img {
+  width: 215px;
+  margin: 0 auto;
+}
+
+.forum-hero-cta-wrap { margin-top: 26px; }
+/* 버튼 이미지는 알약 배경만 있어서 텍스트를 그 위에 겹친다.
+   img를 그대로 두면 원본 비율이 유지되고, 라벨은 절대배치로 가운데 정렬. */
+.forum-hero-cta {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.2s, filter 0.2s;
+}
+.forum-hero-cta img { width: 240px; }
+.forum-hero-cta-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  font-family: 'KoreaInstituteOfMachineryAndMaterials', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  color: #fff;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+.forum-hero-cta-label .arrow {
+  width: 0.46em;    /* 라벨 글자 크기에 비례 */
+  height: 0.8em;
+  flex-shrink: 0;
+  overflow: visible;
+}
+.forum-hero-cta:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+}
+
+/* ----- 주최/후원 (단일 이미지) ----- */
+/* 후원 블록은 메인 스택에서 빼내 히어로 하단에 고정한다.
+   위쪽 요소를 조정해도 이 위치는 영향을 받지 않는다.
+   세로 위치 손잡이는 아래 bottom 값 하나다. */
+.forum-hero-orgs {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 45px;
+  margin: 0;
+}
+.forum-hero-orgs img {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   6. SPEAKERS
+   ============================================================ */
+.forum-speakers {
+  position: relative;
+  background-color: var(--forum-dark);
+  color: #fff;
+  overflow: hidden;
+}
+.forum-speakers-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.forum-speakers-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.forum-speakers .forum-section-inner { position: relative; z-index: 1; }
+.forum-speakers .forum-section-title { color: #fff; }
+/* 섹션 상단 여백만 줄인다 (.forum-section-inner 기본은 90px) */
+.forum-speakers .forum-section-inner { padding-top: 72px; }
+
+.forum-speaker-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 56px 40px;
+  max-width: 840px;
+  margin: 0 auto;
+}
+.forum-speaker-card { text-align: center; }
+.forum-speaker-photo {
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #2fb6c9, #8b3fd8 60%, #c94fd6);
+}
+.forum-speaker-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.forum-speaker-name {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+.forum-speaker-role {
+  font-size: 16px;
+  font-weight: 300;
+  color: #fff;
+  line-height: 1.5;
+}
+/* 6번째 칸의 F/F 엠블럼 */
+.forum-speaker-card.is-emblem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.forum-speaker-card.is-emblem img { width: 150px; }
+
+/* ============================================================
+   7. PROGRAM
+   ============================================================ */
+.forum-program {
+  background-color: var(--forum-program-bg);
+  background-repeat: no-repeat;
+  /* 원본 상단 약 180px가 검은 무대 천장이라, 그대로 두면 위 연사 섹션
+     (거의 검정)과 붙어 보인다. 그만큼 잘라내 밝은 무대부터 시작하게 한다. */
+  background-position: center -240px;
+  background-size: 100% auto;
+  position: relative;
+}
+.forum-program .forum-section-inner { position: relative; z-index: 1; }
+.forum-program .forum-section-title { color: #fff; margin-bottom: 110px; }
+
+.forum-program-table {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  border-top: 4px solid var(--forum-purple);
+  border-bottom: 4px solid var(--forum-purple);
+}
+.forum-program-table .time-col { width: 150px; }
+.forum-program-table .kind-col { width: 150px; }
+.forum-program-table td {
+  padding: 16px 34px;
+  vertical-align: top;
+  border-bottom: 1px dashed #4356a0;
+}
+.forum-program-table tr:last-child td { border-bottom: 0; }
+/* 등록 행 아래는 실선 (Break Times 위아래와 동일) */
+.forum-program-table tr:first-child td { border-bottom: 2px solid #5a6cae; }
+/* 바깥쪽 여백만 제거해 표 좌우 끝을 선과 맞춘다.
+   td:first-child를 쓰면 시간 칸이 rowspan으로 묶인 '축사' 행에서
+   구분 칸이 첫 td가 되어 왼쪽으로 밀리므로 열 클래스로 지정한다. */
+.forum-program-table .time { padding-left: 0; }
+.forum-program-table .content { padding-right: 0; }
+/* rowspan으로 묶인 그룹의 첫 행은 아래 실선 대신 점선 유지 */
+.forum-program-table tr.group-start td { border-bottom: 1px dashed #4356a0; }
+/* Break Times 행은 위아래 모두 실선 — 위쪽 선은 border-collapse 규칙상
+   윗 행의 1px dashed보다 굵어 이 실선이 이긴다 */
+.forum-program-table tr.is-break td {
+  border-top: 2px solid #5a6cae;
+  border-bottom: 2px solid #5a6cae;
+}
+
+.forum-program-table .time {
+  color: var(--forum-time);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  white-space: nowrap;
+}
+.forum-program-table .kind {
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--forum-text);
+  white-space: nowrap;
+}
+.forum-program-table .content { font-size: 22px; letter-spacing: -1.2px; }
+/* 강연 제목(30px)이 있는 행은 내용 칸 첫 줄이 구분 칸(22px)보다 아래에서
+   시작한다. 그 행의 구분 텍스트만 내려 윗선을 맞춘다.
+   (등록·Break Times처럼 제목이 없는 행은 그대로 둔다) */
+.forum-program-table tr:has(.topic) .kind { padding-top: 22px; }
+.forum-program-table .topic {
+  color: var(--forum-purple);
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+/* 연사명·소속은 강연 제목이 든 .content(22px)보다 1px 작게 */
+.forum-program-table .speaker { font-size: 21px; font-weight: 700; letter-spacing: -0.5px; margin-right: 8px; }
+.forum-program-table .affil { font-size: 21px; color: #4b5563; font-weight: 400; }
+.forum-program-table .plain { color: var(--forum-text); }
+
+.forum-program-note {
+  max-width: 1080px;
+  margin: 28px auto 0;
+  text-align: center;
+  font-size: 20px;
+  color: #2b3345;
+}
+
+/* ============================================================
+   8. REGISTRATION — 상반기 포럼 스타일 이식
+   ============================================================ */
+.forum-registration {
+  background: #fff;
+  padding: 110px 40px 120px;
+}
+.forum-registration-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.forum-registration .forum-section-title {
+  margin-bottom: 60px;
+}
+
+/* ===== Tabs: 참가신청 / 확인 ===== */
+.forum-registration-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 64px;
+}
+.forum-registration-tab {
+  appearance: none;
+  border: none;
+  padding: 16px;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  background: #e5e5e5;
+  color: #9b9b9b;
+  font-family: inherit;
+  transition: background 0.2s, color 0.2s;
+}
+.forum-registration-tab.is-active {
+  background: #111;
+  color: #fff;
+}
+.forum-registration-tab:hover:not(.is-active) {
+  background: #d5d5d5;
+}
+.forum-registration-panel[hidden] { display: none; }
+
+/* ===== 신청 마감 안내 ===== */
+.forum-registration-closed {
+  text-align: center;
+  padding: 80px 40px;
+  background: #f6f7f9;
+  border: 1px solid #e3e6ec;
+  border-radius: 4px;
+}
+.forum-registration-closed-title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: #111;
+}
+.forum-registration-closed-desc {
+  margin: 18px 0 0;
+  font-size: 17px;
+  color: #4a5878;
+}
+.forum-registration-closed-desc a {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* 참가신청 확인 패널: 타이틀·필드 가운데 정렬 */
+.forum-registration-panel[data-panel="lookup"] .forum-form-section h3 {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.forum-registration-panel[data-panel="lookup"] .forum-form-grid {
+  max-width: 520px;
+  margin: 0 auto;
+  padding-bottom: 32px;
+}
+.forum-registration-panel[data-panel="lookup"] .forum-form-row {
+  justify-content: center;
+}
+.forum-registration-panel[data-panel="lookup"] .forum-form-field[aria-hidden="true"] {
+  display: none;
+}
+
+/* ===== Lookup result ===== */
+.forum-lookup-result {
+  margin-top: 40px;
+}
+.forum-lookup-section {
+  padding: 36px 0;
+}
+.forum-lookup-section:first-child { padding-top: 0; }
+.forum-lookup-section:last-child { padding-bottom: 0; }
+.forum-lookup-section h3 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #111;
+}
+.forum-lookup-table {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  color: #1a2342;
+  border-bottom: 2px solid #111;
+}
+.forum-lookup-table > div {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  padding: 18px 0;
+  border-bottom: 1px solid #ececec;
+}
+.forum-lookup-table > div:last-child { border-bottom: none; }
+.forum-lookup-table dt {
+  color: #666;
+  font-weight: 500;
+}
+.forum-lookup-table dd {
+  margin: 0;
+  color: #111;
+}
+.forum-lookup-question {
+  margin: 0;
+  padding: 18px 0 48px;
+  font-size: 18px;
+  line-height: 1.75;
+  color: #333;
+  white-space: pre-wrap;
+}
+.forum-consent-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a2342;
+  margin-bottom: 14px;
+}
+.forum-consent-box {
+  border: 1px solid #545454;
+  border-radius: 4px;
+  padding: 24px 32px;
+  font-size: 15px;
+  line-height: 1.8;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.forum-consent-box .consent-intro {
+  margin-bottom: 18px;
+}
+.forum-consent-box .consent-section {
+  margin-bottom: 16px;
+}
+.forum-consent-box .consent-label {
+  font-weight: 600;
+}
+.forum-consent-box .consent-dashed {
+  position: relative;
+  padding-left: 14px;
+}
+.forum-consent-box .consent-dashed::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+  font-weight: 600;
+}
+.forum-consent-box .consent-sublist {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0 16px;
+}
+.forum-consent-box .consent-sublist li {
+  padding-left: 0;
+}
+.forum-consent-box .consent-items {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px;
+}
+.forum-consent-box .consent-items li {
+  position: relative;
+  padding-left: 14px;
+}
+.forum-consent-box .consent-items li::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+}
+.forum-consent-box .consent-notes {
+  list-style: none;
+  padding: 14px 0 0;
+  margin: 0;
+  border-top: 1px dashed #b5b5b5;
+  color: #5a5a5a;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.forum-consent-box .consent-notes li {
+  position: relative;
+  padding-left: 14px;
+}
+.forum-consent-box .consent-notes li + li {
+  margin-top: 6px;
+}
+.forum-consent-box .consent-notes li::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+}
+.forum-consent-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 32px 0;
+  font-size: 18px;
+  color: #1a2342;
+}
+.forum-consent-check input { width: 16px; height: 16px; }
+
+.forum-form-section {
+  margin-top: 48px;
+  padding-top: 40px;
+  border-top: 1px dashed #aaa;
+}
+.forum-form-section:first-of-type { border-top: none; padding-top: 0; }
+.forum-form-section:has(+ .forum-form-actions) {
+  padding-bottom: 48px;
+  border-bottom: 1px dashed #aaa;
+}
+.forum-form-section h3 {
+  font-size: 30px;
+  font-weight: 700;
+  color: #1a2342;
+  margin-bottom: 28px;
+}
+.forum-form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.forum-form-row {
+  display: flex;
+  gap: 64px;
+}
+.forum-form-field {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+  column-gap: 20px;
+}
+.forum-form-field label {
+  font-size: 18px;
+  color: #1a2342;
+}
+.forum-form-field label .req { color: #e53e3e; margin-left: 2px; }
+.forum-form-field input[type="text"],
+.forum-form-field input[type="email"],
+.forum-form-field input[type="tel"] {
+  width: 100%;
+  height: 48px;
+  border: 1px solid #545454;
+  border-radius: 4px;
+  padding: 0 14px;
+  font-size: 15px;
+  color: #1a2342;
+  background: #fff;
+  font-family: inherit;
+}
+.forum-form-field input::placeholder { color: #b0b7c8; }
+/* 성명 행처럼 필드가 하나인 줄은 오른쪽 자리표시자를 없애 폭을 꽉 채운다 */
+.forum-form-field[aria-hidden="true"] { display: none; }
+
+.forum-form-note {
+  font-size: 18px;
+  color: #545454;
+  margin-bottom: 20px;
+}
+.forum-form-section textarea {
+  width: 100%;
+  min-height: 180px;
+  border: 1px solid #545454;
+  border-radius: 4px;
+  padding: 16px;
+  font-size: 16px;
+  font-family: inherit;
+  color: #1a2342;
+  resize: vertical;
+}
+
+.forum-form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 60px;
+}
+.forum-form-actions button {
+  min-width: 280px;
+  height: 68px;
+  font-size: 32px;
+  font-weight: 700;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 4px;
+  margin-top: 20px;
+}
+.forum-form-actions .btn-cancel {
+  background: #c4c8d1;
+  color: #fff;
+}
+.forum-form-actions .btn-submit {
+  background: #111;
+  color: #fff;
+}
+.forum-form-actions button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: forum-spin 0.7s linear infinite;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+@keyframes forum-spin {
+  to { transform: rotate(360deg); }
+}
+.forum-form-contact {
+  text-align: center;
+  font-size: 17px;
+  color: #4a5878;
+  margin-top: 64px;
+}
+.forum-form-contact .contact-label::after {
+  content: " :";
+  margin-right: 4px;
+}
+.forum-form-contact .contact-reach {
+  white-space: nowrap;
+}
+
+
+/* 동의 문구가 시안에서는 번호 목록이다. 들여쓰기를 없애 박스 폭을 꽉 쓴다 */
+.forum-consent-box .consent-list {
+  list-style: decimal;
+  list-style-position: inside;
+  padding-left: 0;
+  margin: 0;
+}
+.forum-consent-box .consent-list li { padding-left: 0; }
+
+/* ============================================================
+   9. LOCATION — 상반기 포럼 스타일 이식
+   ============================================================ */
+.forum-location {
+  position: relative;
+  padding: 110px 40px 130px;
+  color: #fff;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.forum-location-inner {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.forum-map {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 60px;
+}
+.forum-map iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.forum-location-info {
+  border-top: 2px solid rgba(255, 255, 255);
+  border-bottom: 2px solid rgba(255, 255, 255);
+}
+.forum-location-info .row {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  align-items: stretch;
+  border-bottom: 1px solid rgba(255, 255, 255);
+  font-size: 19px;
+  font-weight: 500;
+}
+.forum-location-info .row .label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(0, 53, 122, 0.85);
+  padding: 16px 8px;
+}
+.forum-location-info .row .value {
+  display: flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+  padding: 16px 24px;
+}
+.forum-location-transport {
+  margin-top: 48px;
+  text-align: center;
+}
+.forum-location-transport .group { margin-bottom: 22px; }
+.forum-location-transport .group h4 {
+  font-size: 24px;
+  font-weight: 700;
+  color: rgb(56, 182, 255);
+  margin-bottom: 8px;
+}
+.forum-location-transport .group h4.subway {
+	color: rgb(99, 221, 29);
+	margin-top: 24px;
+}
+.forum-location-transport .group p {
+  font-size: 24px;
+}
+
+/* ============================================================
+   10. FOOTER — 상반기 포럼 스타일 이식
    ============================================================ */
 .forum-footer {
   background: #000;
@@ -303,7 +1049,7 @@ body { margin: 0; padding: 0; }
 .forum-page a.forum-footer-privacy,
 .forum-footer-privacy {
   display: inline-block;
-  color: var(--forum-accent);
+  color: #ff5757;
   font-weight: 600;
   font-size: 18px;
   margin-bottom: 20px;
@@ -312,7 +1058,7 @@ body { margin: 0; padding: 0; }
   font-size: 17px;
   color: rgba(255, 255, 255);
   margin-bottom: 4px;
-  letter-spacing: 1px;
+	letter-spacing: 1px;
 }
 .forum-footer-copy {
   font-size: 15px;
@@ -327,35 +1073,474 @@ body { margin: 0; padding: 0; }
 }
 
 /* ============================================================
-   6. RESPONSIVE
+   연사 프로필 모달
+   ============================================================ */
+/* 카드가 <button>이므로 기본 스타일을 지운다 */
+.forum-speaker-card {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+  text-align: center;
+  transition: transform 0.2s;
+}
+.forum-speaker-card:hover { transform: translateY(-4px); }
+.forum-speaker-card:focus-visible {
+  outline: 2px solid var(--forum-violet);
+  outline-offset: 6px;
+  border-radius: 8px;
+}
+.forum-speaker-card.is-emblem { cursor: default; transform: none; }
+
+.forum-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: 'Escoredream', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  letter-spacing: -0.5px;
+}
+.forum-modal[aria-hidden="false"] {
+  display: flex;
+  animation: forumModalFadeIn 0.3s ease;
+}
+@keyframes forumModalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.forum-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+}
+.forum-modal-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 800px;
+  max-height: calc(100vh - 40px);
+  background: #11081f;
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  color: #fff;
+  overflow: hidden;
+}
+.forum-modal-scroll {
+  overflow-y: auto;
+  max-height: 100%;
+}
+.forum-modal-top {
+  display: flex;
+  gap: 32px;
+  padding: 44px 44px 24px;
+  align-items: stretch;
+}
+.forum-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s;
+}
+.forum-modal-close:hover { opacity: 0.7; }
+.forum-modal-close svg { width: 36px; height: 36px; }
+
+.forum-modal-left {
+  flex: 0 0 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.forum-modal-badge {
+  display: inline-block;
+  padding: 4px 40px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--forum-blue), var(--forum-violet));
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+}
+.forum-modal-badge:empty { display: none; }
+.forum-modal-photo {
+  width: 300px;
+  height: 100%;
+}
+.forum-modal-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 10px;
+}
+.forum-modal-name {
+  font-size: 32px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 4px;
+  letter-spacing: 2px;
+}
+.forum-modal-role {
+  font-size: 17px;
+  color: #fff;
+  margin: 0 0 24px;
+  line-height: 1.5;
+}
+.forum-modal-right {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.forum-modal-bio {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.8;
+  width: 100%;
+}
+.forum-modal-bio li {
+  position: relative;
+  padding-left: 14px;
+}
+.forum-modal-bio li::before {
+  content: "\2022";
+  position: absolute;
+  left: -4px;
+  color: rgba(255, 255, 255, 0.85);
+}
+.forum-modal-bio:empty { display: none; }
+.forum-modal-intro {
+  margin: 8px 44px 40px;
+  padding: 24px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  letter-spacing: -0.2px;
+}
+.forum-modal-intro:empty { display: none; }
+
+/* 모달 열렸을 때 배경 스크롤 잠금 */
+body.forum-modal-open { overflow: hidden; }
+
+@media (max-width: 720px) {
+  .forum-modal { padding: 12px; }
+  .forum-modal-content { max-width: 440px; }
+  .forum-modal-top {
+    flex-direction: column;
+    padding: 24px 20px 16px;
+    gap: 20px;
+    align-items: center;
+  }
+  .forum-modal-left { flex: 0 0 auto; }
+  .forum-modal-photo { width: 200px; height: 260px; }
+  .forum-modal-photo img { border-radius: 6px; }
+  .forum-modal-right {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+  .forum-modal-badge {
+    padding: 3px 22px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .forum-modal-name { font-size: 20px; letter-spacing: 1px; margin-bottom: 2px; }
+  .forum-modal-role { font-size: 13px; margin-bottom: 20px; line-height: 1.4; }
+  .forum-modal-bio {
+    display: inline-block;
+    width: auto;
+    font-size: 12px;
+    line-height: 1.6;
+    text-align: left;
+    margin: 0 auto;
+  }
+  .forum-modal-bio li { padding-left: 11px; }
+  .forum-modal-intro {
+    margin: 0 20px 20px;
+    padding: 14px 16px;
+    font-size: 13px;
+    line-height: 1.65;
+  }
+  .forum-modal-close { position: fixed; top: 10px; right: 10px; }
+}
+
+/* ============================================================
+   초대의 글 페이지 — 상반기 포럼 구조 이식
+   ============================================================ */
+.forum-invitation-hero {
+  position: relative;
+  margin-top: 0;
+  height: 380px;        /* 고정 헤더 136px + 배너 244px */
+  color: #fff;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  background: #04123f;
+}
+/* 배너 전체를 덮는다. 헤더 높이에 맞춰 top을 주면 오차만큼 폴백 남색이
+   드러나므로 inset:0으로 두고, cover + 상단 정렬로 영상 위쪽(파랑~라벤더)을 쓴다. */
+.forum-invitation-hero .forum-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.forum-invitation-hero .forum-hero-bg video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+.forum-invitation-hero .forum-hero-bg::after {
+  display: none;
+}
+.forum-invitation-hero-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  /* 고정 헤더 136px만큼 비우고, 남는 공간에서 세로 가운데 정렬 */
+  padding: 136px 48px 0;
+  justify-content: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.forum-invitation-title-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+/* .forum-page img { height: auto }(0,1,1)를 이기려면 선택자를 한 단계 올려야 한다 */
+.forum-invitation-hero .forum-invitation-lockup {
+  height: 107px;
+  width: auto;
+  max-width: 100%;
+}
+.forum-invitation-hero .forum-hero-meta {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: 'KoreaInstituteOfMachineryAndMaterials', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 25px;
+  font-weight: 700;
+  color: #111;          /* 배경이 밝은 파스텔이라 검정 */
+  letter-spacing: -2px;
+}
+.forum-invitation-hero .forum-hero-meta .sep {
+  color: #111;
+  font-weight: 700;
+}
+
+.forum-invitation-msg {
+  position: relative;
+  padding: 40px 40px 130px;
+  color: #1a1a2e;        /* 상반기는 어두운 배경이라 #fff였지만 우리는 흰 바탕 */
+  background-color: #fff;
+  /* invitation_bg.jpg는 원본 5000px 중 상단 395px에만 흐린 무대 이미지가 있고
+     나머지는 흰색이다. 화면 폭이 넓으면 띠도 커지므로 vw로 올린다.
+     띠 높이 = 395px x (화면폭/1920) = 20.6vw. 21vw를 올리면 가려진다.
+     (background-position의 %는 단순 이동이 아니라
+      (컨테이너높이 - 이미지높이) x % 계산이라 여기선 쓸 수 없다) */
+  background-position: center -21vw;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+}
+.forum-invitation-msg-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+/* 시안 본문에는 '초대의 글' 제목이 없다. 스크린리더용으로만 남긴다.
+   (노출이 필요하면 이 규칙을 지우면 된다) */
+.forum-invitation-msg .forum-section-title {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.forum-invitation-msg-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+  border-bottom: 3px solid #1a1a1a;
+}
+.forum-invitation-photo {
+  flex-shrink: 0;
+}
+.forum-invitation-photo img {
+  display: block;
+  width: 520px;
+  height: 460px;
+  object-fit: cover;
+  object-position: top;
+}
+.forum-invitation-msg-headline  {
+	margin-left: -60px;
+}
+.forum-invitation-msg-headline .msg-lead {
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.7;   /* 두 줄 사이 간격 */
+  color: #1a1a1a;
+  margin: 100px 0 48px;
+  text-align: center;
+}
+.forum-invitation-msg-headline .msg-sign {
+  display: flex;
+  flex-direction: column;   /* 서명 아래에 직함 */
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.forum-invitation-msg-headline .sign-img {
+  height: 100px;
+  width: auto;
+}
+.forum-invitation-msg-headline .sign-name {
+  font-size: 17px;
+}
+
+.forum-invitation-msg-body {
+  font-size: 20px;
+  line-height: 1.8;
+  color: #1a1a2e;
+}
+.forum-invitation-msg-body p + p {
+  margin-top: 24px;
+  color: #1a1a2e;
+}
+
+/* ============================================================
+   파트너 페이지 — 상반기 포럼 구조 이식
+   ============================================================ */
+.forum-partners-page {
+  background: #fff;
+  padding: 80px 40px;
+  font-family: 'Escoredream', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+.forum-partners-page-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  text-align: center;
+}
+.forum-partners-page .forum-section-title {
+  color: #0a1f6b;
+  margin-bottom: 24px;
+}
+.forum-partners-page-lead {
+  font-size: 26px;
+  font-weight: 500;
+  color: #545454;
+  margin-bottom: 40px;
+}
+.forum-partners-page-images {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;              /* 두 이미지가 이어지도록 붙인다 */
+  font-size: 0;        /* inline 요소 사이 공백 문자 제거 */
+}
+.forum-partners-page-image {
+  display: block;
+  width: 760px;        /* 표시 폭 — 이 값으로 조절 */
+  max-width: 100%;
+  height: auto;
+}
+
+/* ============================================================
+   11. RESPONSIVE
    ============================================================ */
 
 /* ---- Tablet / small desktop (≤ 1080px) ---- */
 @media (max-width: 1080px) {
-  .forum-header-inner { padding: 16px 24px; gap: 24px; }
-  .forum-logo img { height: 72px; }
-  .forum-nav { gap: 36px; }
+  .forum-header-inner { height: 112px; padding: 0 24px; gap: 24px; }
+  .forum-logo { padding-bottom: 19px; }
+  .forum-logo .logo-mark { height: 44px; }
+  .forum-logo .logo-text { height: 38px; }
+  .forum-nav { gap: 42px; }
   .forum-nav a { font-size: 18px; }
   .forum-header-utility { gap: 12px; }
   .forum-header-utility a { font-size: 15px; }
+  .forum-header-utility .utility-pill { font-size: 15px; padding: 2px 12px; border-radius: 5px; }
   .forum-header-utility img { height: 20px; }
-  .forum-header.scrolled .forum-header-inner { padding: 12px 32px; }
-  .forum-header.scrolled .forum-logo img { height: 48px; }
+  .forum-header.scrolled .forum-header-inner { height: 66px; padding: 0 32px; }
+  .forum-header.scrolled .forum-logo .logo-mark { height: 38px; }
+  .forum-header.scrolled .forum-logo .logo-text { height: 32px; }
+  .forum-header.scrolled .forum-nav { gap: 32px; }
 
-  .forum-section-inner { padding: 72px 24px; }
-  .forum-section-title { font-size: 32px; margin-bottom: 40px; }
+  /* 패딩은 섹션 요소에 준다. -inner에 주면 섹션 패딩과 더해져 두 배가 된다 */
+  .forum-section-inner { padding: 70px 24px; }
+  .forum-registration,
+  .forum-location,
+  .forum-partners-page { padding: 70px 24px; }
+  .forum-invitation-msg { padding: 48px 24px 90px; }
+  .forum-section-title { font-size: 32px; margin-bottom: 44px; }
+
+  .forum-hero {
+    margin-top: 112px;
+    height: 660px;
+  }
+  .forum-hero-inner { padding: 40px 24px; }
+  .forum-hero-orgs { bottom: 44px; }
+  .forum-speaker-photo { width: 140px; height: 140px; }
+  .forum-program-table .topic { font-size: 20px; }
 }
 
 /* ---- Mobile (≤ 768px) ---- */
 @media (max-width: 768px) {
-  /* === HEADER — logo on top, nav row below (utility hidden) === */
+  /* === HEADER — 로고 위, 내비 아래 (유틸리티 숨김) === */
+  /* 높이를 고정한다 — GNB가 1줄이냐 2줄이냐에 따라 헤더가 116/89px로
+     달라지면 아래 배너의 상단 여백이 그만큼 어긋난다 */
   .forum-header-inner {
     flex-direction: column;
     align-items: center;
-    padding: 10px 16px;
-    gap: 14px;
+    justify-content: center;
+    height: 52px;
+    padding: 0 16px;
+    gap: 12px;
   }
-  .forum-logo img { height: 44px; }
+  .forum-logo { padding-bottom: 0; }
+  .forum-logo .logo-mark { height: 30px; }
+  .forum-logo .logo-text { height: 27px; }
   .forum-header-right {
     flex: initial;
     width: 100%;
@@ -364,44 +1549,279 @@ body { margin: 0; padding: 0; }
   }
   .forum-header-utility { display: none; }
   .forum-nav {
-    display: flex;
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 6px 14px;
     padding-top: 0;
+    gap: 6px 9px;
   }
-  .forum-nav a {
-    font-size: 13px;
-    font-weight: 600;
-    white-space: nowrap;
-  }
+  .forum-nav a { font-size: 12px; font-weight: 600; letter-spacing: -0.5px; }
 
-  /* Scrolled state: drop desktop's absolute-centered nav */
+  /* 모바일 헤더는 이미 압축 배치라 스크롤해도 형태를 바꾸지 않는다 */
   .forum-header.scrolled .forum-header-inner {
     display: flex;
     flex-direction: column;
-    padding: 8px 16px;
+    align-items: center;
+    justify-content: center;
+    height: 52px;
+    padding: 0 16px;
+    gap: 12px;
   }
-  .forum-header.scrolled .forum-logo img { height: 36px; }
+  .forum-header.scrolled .forum-logo { align-items: flex-end; padding-bottom: 0; }
+  .forum-header.scrolled .forum-logo .logo-mark { height: 30px; }
+  .forum-header.scrolled .forum-logo .logo-text { height: 27px; }
   .forum-header.scrolled .forum-header-right {
-    display: flex;
     flex-direction: column;
     width: 100%;
+    gap: 0;
   }
   .forum-header.scrolled .forum-nav {
     position: static;
     transform: none;
     left: auto;
     top: auto;
+    padding-top: 0;
     gap: 6px 14px;
   }
-  .forum-header.scrolled .forum-nav a { font-size: 13px; }
+  .forum-header.scrolled .forum-nav a { font-size: 12px; letter-spacing: -0.5px; }
 
   .forum-page .mobile-break { display: inline; }
+  .forum-page [id] { scroll-margin-top: 90px; }
 
-  .forum-section-inner { padding: 56px 20px; }
-  .forum-section-title { font-size: 28px; margin-bottom: 32px; }
+  /* === 섹션 여백 — 우선순위 높은 기본 규칙까지 함께 덮는다 === */
+  .forum-section-inner,
+  .forum-speakers .forum-section-inner,
+  .forum-program .forum-section-inner { padding: 56px 20px; }
+  .forum-registration { padding: 56px 20px; }
+  .forum-location { padding: 56px 20px 64px; }
+
+  /* === 섹션 타이틀 — 전 섹션 동일 === */
+  .forum-section-title,
+  .forum-speakers .forum-section-title,
+  .forum-program .forum-section-title,
+  .forum-registration .forum-section-title,
+  .forum-location .forum-section-title,
+  .forum-partners-page .forum-section-title,
+  .forum-invitation-msg .forum-section-title {
+    font-size: 30px;
+    margin-bottom: 40px;
+  }
+
+  /* === HERO === */
+  /* margin-top을 두지 않는다 — 헤더 높이와 어긋나면 흰 띠가 생긴다.
+     대신 inner의 위쪽 패딩으로 콘텐츠를 헤더 아래로 내린다. */
+  /* 시안(mobile_hero.png)의 세로 비율을 390px 화면 기준으로 환산한 값.
+     타이틀 306px, 일시장소 547px, 버튼 623px, 주최후원 745px 지점 */
+  .forum-hero {
+    margin-top: 0;
+    height: 864px;
+    --hero-bg-shift: 0%;
+    --hero-bg-y: 50%;
+  }
+  .forum-hero-inner {
+    padding: 242px 20px 0;         /* 시안의 로고 위치 */
+    justify-content: flex-start;   /* 패딩으로 위치를 잡는다 */
+  }
+  /* 헤더에서 뺀 로고를 타이틀 위에 둔다 (시안 242px 지점, 높이 32px) */
+  .forum-hero-logo {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .forum-hero-logo .logo-mark { height: 32px; width: auto; }
+  .forum-hero-logo .logo-text { height: 28px; width: auto; }
+  /* 헤더는 메뉴만 */
+  .forum-logo { display: none; }
+  .forum-hero-title img { width: 224px; max-width: none; }
+  .forum-hero-datetime { margin-top: 68px; }
+  .forum-hero-datetime img { width: 113px; max-width: none; }
+  .forum-hero-cta-wrap { margin-top: 30px; }
+  .forum-hero-cta img { width: 173px; }
+  .forum-hero-cta-label { font-size: 22px; gap: 12px; }
+  /* 주최/후원은 로고 11개가 든 단일 이미지라 리플로우가 안 된다.
+     좁은 화면에서는 폭을 꽉 채워 최대한 크게 보여준다. */
+  .forum-hero-orgs { bottom: 77px; padding: 0 20px; }
+  .forum-hero-orgs img { width: 100%; }
+
+  /* 세로형 배경 영상을 좌우로 확대해 알약 장식이 중앙에서 벌어지게 한다.
+     (확대하면 중심에서 벗어난 요소일수록 바깥으로 밀린다) */
+  .forum-hero-bg {
+    left: -16%;
+    right: -16%;
+  }
+
+  /* === SPEAKERS — 2열 유지 === */
+  .forum-speaker-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 16px; }
+  .forum-speaker-photo { width: 138px; height: 138px; margin-bottom: 12px; }
+  .forum-speaker-name { font-size: 18px; }
+  .forum-speaker-role { font-size: 13px; }
+  .forum-speaker-card.is-emblem img { width: 110px; }
+
+  /* === PROGRAM === */
+  /* 상반기 포럼 모바일 표 수치를 따른다 */
+  .forum-program-table { max-width: 100%; }
+  .forum-program-table td { padding: 14px 4px; }
+  .forum-program-table .time-col { width: 76px; }
+  .forum-program-table .kind-col { width: 72px; }
+  .forum-program-table .kind { white-space: nowrap; }
+  .forum-program-table .time { font-size: 13px; line-height: 16px; letter-spacing: -0.5px; }
+  .forum-program-table .kind { font-size: 12px; line-height: 16px; }
+  .forum-program-table .content { font-size: 13px; line-height: 16px; letter-spacing: -0.5px; }
+  .forum-program-table .speaker,
+  .forum-program-table .affil { font-size: 12px; }
+  /* 좁은 화면에서 줄바꿈을 유발하는 부가 표기는 숨긴다 */
+  .forum-program-table .affil-note { display: none; }
+  .forum-program-table .topic {
+    font-size: 12px;
+    line-height: 17px;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .forum-program-table tr:has(.topic) .kind { padding-top: 14px; }
+  .forum-program-note { font-size: 11px; letter-spacing: -0.5px; }
+
+  /* === 초대의 글 / 파트너 배너 === */
+  .forum-invitation-hero {
+    /* 위 여백 22px, 아래 10px — 가운데 정렬 대신 패딩으로 각각 지정한다 */
+    height: auto;
+    margin-top: 0;
+  }
+  /* 배경 규칙은 데스크톱과 동일(inset:0 + cover) — 별도 지정 불필요 */
+  .forum-invitation-hero-inner {
+    padding: 74px 20px 10px;    /* 헤더 52px + 위 여백 22px */
+    justify-content: flex-start;
+    height: auto;
+  }
+  .forum-invitation-title-block { margin-bottom: 14px; align-items: center; }
+  .forum-invitation-hero .forum-invitation-lockup { height: 46px; }
+  .forum-invitation-hero .forum-hero-meta {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 8px;
+    font-size: 14px;
+    letter-spacing: -1px;
+    text-align: center;
+  }
+
+  /* === 초대의 글 본문 === */
+  .forum-invitation-msg { padding: 32px 20px 72px; }
+  .forum-invitation-msg-top {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 32px;
+    border-bottom-width: 2px;
+    padding-bottom: 28px;
+  }
+  .forum-invitation-photo { flex: 0 0 auto; }
+  .forum-invitation-photo img { width: 300px; height: 265px; }
+  .forum-invitation-msg-headline { margin: 20px 0 0; text-align: center; }
+  .forum-invitation-msg-headline .msg-lead {
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 0 0 20px;
+  }
+  .forum-invitation-msg-headline .sign-img { height: 64px; }
+  .forum-invitation-msg-headline .sign-name { font-size: 13px; }
+  .forum-invitation-msg-body { font-size: 15px; line-height: 1.75; }
+  .forum-invitation-msg-body p + p { margin-top: 16px; }
+
+  /* === 파트너 === */
+  .forum-partners-page { padding: 56px 20px 64px; }
+  .forum-partners-page-lead { font-size: 17px; margin-bottom: 32px; }
+  .forum-partners-page-image { width: 100%; }
+
+  /* === REGISTRATION === */
+  .forum-registration-inner { padding: 0; }
+  .forum-consent-title { font-size: 16px; }
+  .forum-consent-box { padding: 18px 20px; font-size: 13px; line-height: 1.7; max-height: 190px; }
+
+  /* Tabs */
+  .forum-registration-tabs { margin-bottom: 32px; }
+  .forum-registration-tab { padding: 16px 8px; font-size: 16px; letter-spacing: 0; }
+
+  /* 신청 마감 안내 */
+  .forum-registration-closed { padding: 48px 20px; }
+  .forum-registration-closed-title { font-size: 18px; }
+  .forum-registration-closed-desc { font-size: 14px; margin-top: 14px; }
+
+  /* Lookup panel */
+  .forum-registration-panel[data-panel="lookup"] .forum-form-section h3 { margin-bottom: 28px; }
+  .forum-registration-panel[data-panel="lookup"] .forum-form-grid { padding-bottom: 16px; }
+
+  /* Lookup result */
+  .forum-lookup-result { margin-top: 28px; }
+  .forum-lookup-section { padding: 24px 0; }
+  .forum-lookup-section h3 { font-size: 20px; padding-bottom: 10px; }
+  .forum-lookup-table { font-size: 14px; }
+  .forum-lookup-table > div {
+    grid-template-columns: 90px 1fr;
+    padding: 12px 0;
+  }
+  .forum-lookup-question { font-size: 14px; padding: 12px 0 28px; }
+  .forum-consent-check { font-size: 14px; margin: 24px 0; }
+  .forum-form-section { margin-top: 32px; padding-top: 32px; }
+  .forum-form-section:has(+ .forum-form-actions) { padding-bottom: 32px; }
+  .forum-form-section h3 { font-size: 22px; margin-bottom: 20px; text-align: center; }
+  .forum-form-grid { gap: 24px; }
+  .forum-form-row { flex-direction: column; gap: 20px; }
+  .forum-form-field[aria-hidden="true"] { display: none; }
+  .forum-form-field {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .forum-form-field label { font-size: 15px; }
+  .forum-form-field input[type="text"],
+  .forum-form-field input[type="email"],
+  .forum-form-field input[type="tel"] {
+    height: 44px; font-size: 14px;
+  }
+  .forum-form-note { font-size: 13px; margin-bottom: 14px; }
+  .forum-form-section textarea { min-height: 140px; font-size: 14px; }
+  .forum-form-actions { gap: 12px; margin-top: 36px; }
+  .forum-form-actions button {
+    min-width: 0; flex: 1; height: 54px;
+    font-size: 16px; letter-spacing: 2px; margin-top: 0;
+  }
+  .forum-form-contact { font-size: 13px; margin-top: 24px; line-height: 1.7; }
+  .forum-form-contact .contact-label,
+  .forum-form-contact .contact-info { display: block; }
+  .forum-form-contact .contact-label::after { content: none; }
+
+  /* === MOBILE-ONLY LINE BREAKS === */
+  .forum-page .mobile-break { display: inline; }
+
+  /* === LOCATION === */
+  .forum-map { aspect-ratio: 4 / 3; margin-bottom: 28px; }
+  .forum-location-info .row {
+    grid-template-columns: 60px 1fr;
+    font-size: 14px;
+  }
+  .forum-location-info .row .label { padding: 12px 4px; }
+  .forum-location-info .row .value { padding: 12px 14px; line-height: 1.5; }
+  .forum-location-transport {
+    margin-top: 24px;
+    text-align: left;
+  }
+  .forum-location-transport .group { margin-bottom: 16px; }
+  .forum-location-transport .group h4 {
+    font-size: 18px;
+    text-align: left;
+  }
+  .forum-location-transport .group p {
+    font-size: 15px;
+    text-align: left;
+    line-height: 1.6;
+    word-break: keep-all;
+  }
+
+  /* === PARTNERS (main page section) === */
+  .forum-partners-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .forum-partner-slot { height: 60px; }
 
   /* === FOOTER === */
   .forum-footer { padding: 48px 20px 56px; }
@@ -411,9 +1831,14 @@ body { margin: 0; padding: 0; }
   .forum-footer-contact { font-size: 13px; }
   .forum-footer-copy { font-size: 12px; margin-bottom: 24px; }
   .forum-footer-logo img { height: 28px; }
+
+  /* === INVITATION HERO === */
 }
 
 /* ---- Small mobile (≤ 480px) ---- */
 @media (max-width: 480px) {
-  .forum-section-title { font-size: 26px; margin-bottom: 28px; }
+  .forum-section-title { font-size: 23px; margin-bottom: 26px; }
+  .forum-speaker-photo { width: 108px; height: 108px; }
+  .forum-program-table .time-col { width: 74px; }
+  .forum-program-table .time { font-size: 11px; }
 }

@@ -1,12 +1,17 @@
 {
-  "siteName": "2026 투자포럼",
+  "siteName": "2026 한국금융 투자포럼",
+  "siteNameEn": "FNTIMES INVESTMENT FORUM 2026",
   "siteUrl": "https://TODO.fntimes.com",
-  "description": "한국금융신문이 개최하는 2026 투자포럼. TODO 일자 · TODO 장소",
-  "ogTitle": "2026 투자포럼 — TODO 슬로건",
-  "ogDescription": "한국금융신문이 개최하는 2026 투자포럼. TODO 일자 · TODO 장소",
+  "description": "머니무브 2026, 새로운 부의 공식 — 주식·부동산·코인 승자의 조건. 2026. 9. 29.(화) 14:00~17:00 은행회관 국제회의실",
+  "ogTitle": "2026 한국금융 투자포럼 — 머니무브 2026, 부의 공식",
+  "ogDescription": "한국금융신문이 개최하는 2026 한국금융 투자포럼. 2026. 9. 29.(화) 14:00~17:00, 은행회관 국제회의실",
   "ogImage": "https://TODO.fntimes.com/images/og_image.jpg",
   "host": "한국금융신문사",
   "contactEmail": "forum@fntimes.com",
   "contactPhone": "02-773-1730",
-  "copyrightYear": "2026"
+  "registerPhone": "02) 773-6300",
+  "registerEmail": "forum@fntimes.com",
+  "copyrightYear": "2026",
+  "eventDate": "2026. 9. 29.(화) 14:00~17:00",
+  "eventPlace": "은행회관 국제회의실 (2F)"
 }

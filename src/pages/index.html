@@ -9,26 +9,41 @@ extraScripts:
 
     <!-- ============================================================
          1. HERO
-         TODO 시안 확정 후: 배경(영상/이미지), 타이틀 이미지, 일시·장소, CTA
          ============================================================ -->
     <section class="forum-hero">
       <div class="forum-hero-bg" aria-hidden="true">
-        <!-- 배경 영상을 쓸 경우: main.js가 뷰포트에 맞춰 desktop/mobile 소스를 고른다
-        <video autoplay muted loop playsinline
+        <!-- loop 없음 — 최초 로드 시 한 번만 재생 -->
+        <video autoplay muted playsinline
                data-src-desktop="/images/hero_bg_video.mp4"
-               data-src-mobile="/images/hero_bg_mobile.mp4"></video>
-        -->
+               data-src-mobile="/images/hero_bg_mobile.webm"></video>
       </div>
+
       <div class="forum-hero-inner">
-        <p class="forum-hero-tag">{{siteName}}</p>
+        <!-- 모바일에서만 노출 — 헤더에서 로고를 빼고 이 자리에 둔다 -->
+        <a class="forum-hero-logo" href="/" aria-label="{{siteName}}">
+          <img class="logo-mark" src="/images/header_logo.png" alt="코주부">
+          <img class="logo-text" src="/images/header_logo_text.png" alt="{{siteName}}">
+        </a>
         <h1 class="forum-hero-title">
-          <!-- TODO 시안의 타이틀 이미지 또는 텍스트 -->
+          <img src="/images/hero_title.png" alt="머니무브 2026 부의 공식 — 주식·부동산·코인 승자의 조건">
         </h1>
-        <p class="forum-hero-meta">
-          <!-- TODO 2026. 0. 00.(0) 00:00 · 장소 -->
+
+        <p class="forum-hero-datetime">
+          <picture>
+            <source media="(max-width: 768px)" srcset="/images/hero_datetime_mobile.png">
+            <img src="/images/hero_datetime.png" alt="9월 29일 PM 2:00 명동 은행회관 국제회의실(2F)">
+          </picture>
         </p>
+
         <div class="forum-hero-cta-wrap">
-          <a class="forum-hero-cta" href="#registration">사전등록</a>
+          <a class="forum-hero-cta" href="#registration">
+            <img src="/images/btn_register.png" alt="">
+            <span class="forum-hero-cta-label">사전등록<svg class="arrow" viewBox="0 0 8 14" fill="none" aria-hidden="true"><path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+        </div>
+
+        <div class="forum-hero-orgs">
+          <img src="/images/hero_orgs.png" alt="주최/주관 KFT 미디어그룹 한국금융신문 · 후원 금융위원회, 금융감독원, 은행연합회, 금융투자협회, 생명보험협회, 손해보험협회, 여신금융협회, 저축은행중앙회, 신용정보협회, 한국대부금융협회, IFPK 한국재무설계협회">
         </div>
       </div>
     </section>
@@ -37,44 +52,345 @@ extraScripts:
          2. SPEAKERS
          ============================================================ -->
     <section class="forum-speakers" id="speakers">
+      <div class="forum-speakers-bg" aria-hidden="true">
+        <video autoplay muted loop playsinline
+               data-src-desktop="/images/speakers_bg_video.mp4"></video>
+      </div>
       <div class="forum-section-inner">
-        <h2 class="forum-section-title">연사소개</h2>
+        <h2 class="forum-section-title">주요연사</h2>
+
         <div class="forum-speaker-grid">
-          <!-- TODO 연사 카드 -->
+          <button type="button" class="forum-speaker-card"
+                  data-name="황 성 엽"
+                  data-role="한국금융투자협회<br>회장"
+                  data-badge="축사"
+                  data-image="/images/speaker_hwang_sy.jpg"
+                  data-bio="[&quot;금융투자협회 회장&quot;, &quot;한국예탁결제원 사외이사&quot;, &quot;금융투자협회 회원이사&quot;, &quot;신영증권 대표이사&quot;, &quot;미국 University of Illinois Master of Science in Finance&quot;, &quot;숭실대학교 중소기업대학원 석사&quot;, &quot;서울대학교 경영학 학사&quot;]">
+            <div class="forum-speaker-photo"><img src="/images/speaker_hwang_sy.jpg" alt="황성엽"></div>
+            <p class="forum-speaker-name">황 성 엽</p>
+            <p class="forum-speaker-role">한국금융투자협회<br>회장</p>
+          </button>
+          <button type="button" class="forum-speaker-card"
+                  data-name="오 동 석"
+                  data-role="전 슈카월드 주식분석가<br>(알상무)"
+                  data-badge="기조강연"
+                  data-image="/images/speaker_oh_ds.jpg"
+                  data-bio="[&quot;전, 슈카월드 도서팀장&quot;, &quot;SK증권 프랍 트레이더&quot;, &quot;NH헤지자산운용 펀드매니저&quot;, &quot;삼성헤지자산운용 펀드매니저&quot;, &quot;LS증권 애널리스트&quot;, &quot;동양증권 프랍 트레이더&quot;, &quot;서울대학교 경제학 학사&quot;]">
+            <div class="forum-speaker-photo"><img src="/images/speaker_oh_ds.jpg" alt="오동석"></div>
+            <p class="forum-speaker-name">오 동 석</p>
+            <p class="forum-speaker-role">전 슈카월드 주식분석가<br>(알상무)</p>
+          </button>
+          <button type="button" class="forum-speaker-card"
+                  data-name="이 승 우"
+                  data-role="유진투자증권<br>리서치센터장"
+                  data-badge="주식시장"
+                  data-image="/images/speaker_lee_sw.jpg"
+                  data-bio="[&quot;유진투자증권 리서치센터 센터장 상무&quot;, &quot;유진투자증권 리서치센터 전략산업분석팀 팀장&quot;, &quot;IBK투자증권 기업분석팀 센터장&quot;, &quot;서울대학교 대학원 경영학 석사&quot;, &quot;서울대학교 컴퓨터공학과 학사&quot;]">
+            <div class="forum-speaker-photo"><img src="/images/speaker_lee_sw.jpg" alt="이승우"></div>
+            <p class="forum-speaker-name">이 승 우</p>
+            <p class="forum-speaker-role">유진투자증권<br>리서치센터장</p>
+          </button>
+          <button type="button" class="forum-speaker-card"
+                  data-name="박 합 수"
+                  data-role="박합수부동산연구소<br>대표"
+                  data-badge="부동산시장"
+                  data-image="/images/speaker_park_hs.jpg"
+                  data-bio="[&quot;(주)박합수부동산연구소 대표이사&quot;, &quot;건국대학교 부동산대학원 겸임교수&quot;, &quot;KB국민은행 부동산 수석전문위원&quot;, &quot;한국금융연수원 자문교수&quot;, &quot;단국대학교 대학원 도시 및 지역계획 박사&quot;, &quot;건국대학교 부동산대학원 부동산건설개발 석사&quot;, &quot;동국대학교 회계학 학사&quot;]">
+            <div class="forum-speaker-photo"><img src="/images/speaker_park_hs.jpg" alt="박합수"></div>
+            <p class="forum-speaker-name">박 합 수</p>
+            <p class="forum-speaker-role">박합수부동산연구소<br>대표</p>
+          </button>
+          <button type="button" class="forum-speaker-card"
+                  data-name="김 남 웅"
+                  data-role="포필러스<br>대표"
+                  data-badge="가상자산"
+                  data-image="/images/speaker_kim_nw.jpg"
+                  data-bio="[&quot;포필러스 공동창업자·대표이사(CEO)&quot;, &quot;전 a41 공동창업자·리서치 총괄&quot;, &quot;글로벌 실물자산 토큰화 연합체 TAC 활동&quot;, &quot;블록체인·웹3·디지털자산·RWA 토큰화 및 기관투자 전략 연구&quot;, &quot;국내외 블록체인 프로젝트·금융기관 대상 리서치 및 자문&quot;, &quot;펜실베이니아주립대학교 경제학 전공&quot;]">
+            <div class="forum-speaker-photo"><img src="/images/speaker_kim_nw.jpg" alt="김남웅"></div>
+            <p class="forum-speaker-name">김 남 웅</p>
+            <p class="forum-speaker-role">포필러스<br>대표</p>
+          </button>
+          <div class="forum-speaker-card is-emblem" aria-hidden="true">
+            <img src="/images/ff_emblem.png" alt="">
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
          3. PROGRAM
+         TODO 부동산시장·가상자산·폐회 시간이 시안에서 앞뒤가 맞지 않음.
+              (주식시장 14:50-15:30 → Break 15:30-15:40 → 부동산 14:50-15:10?)
+              확정 시간 받는 대로 아래 data-todo 표시된 행을 수정한다.
          ============================================================ -->
-    <section class="forum-program" id="program">
+    <section class="forum-program" id="program" style="background-image: url(/images/program_bg.jpg);">
       <div class="forum-section-inner">
         <h2 class="forum-section-title">프로그램</h2>
-        <!-- TODO 세션 탭 + 프로그램 표 -->
+
+        <table class="forum-program-table">
+          <caption class="sr-only">2026 한국금융 투자포럼 프로그램</caption>
+          <colgroup>
+            <col class="time-col">
+            <col class="kind-col">
+            <col class="content-col">
+          </colgroup>
+          <tbody>
+            <tr>
+              <td class="time">13:30-14:00</td>
+              <td class="kind">등록</td>
+              <td class="content"><span class="plain">등록확인 / 입장</span></td>
+            </tr>
+            <tr class="group-start">
+              <td class="time" rowspan="2">14:00-14:10</td>
+              <td class="kind">개회사</td>
+              <td class="content"><span class="speaker">김 봉 국</span> <span class="affil">한국금융신문 대표이사 사장</span></td>
+            </tr>
+            <tr>
+              <td class="kind">축사</td>
+              <td class="content"><span class="speaker">황 성 엽</span> <span class="affil">한국금융투자협회 회장</span></td>
+            </tr>
+            <tr>
+              <td class="time">14:10-14:50</td>
+              <td class="kind">기조강연</td>
+              <td class="content">
+                <p class="topic">머니무브…새로운 부의 공식을 찾아라</p>
+                <p><span class="speaker">오 동 석</span> <span class="affil">전 슈카월드 주식분석가<span class="affil-note"> (알상무)</span></span></p>
+              </td>
+            </tr>
+            <tr>
+              <td class="time">14:50-15:30</td>
+              <td class="kind">주식시장</td>
+              <td class="content">
+                <p class="topic">급등과 급락 이후, 투자자가 읽어야 할 신호들</p>
+                <p><span class="speaker">이 승 우</span> <span class="affil">유진투자증권 리서치센터장</span></p>
+              </td>
+            </tr>
+            <tr class="is-break">
+              <td class="time">15:30-15:40</td>
+              <td class="kind"></td>
+              <td class="content"><span class="plain">Break Times</span></td>
+            </tr>
+            <tr data-todo="시간 확정 필요">
+              <td class="time">14:50-15:10</td>
+              <td class="kind">부동산시장</td>
+              <td class="content">
+                <p class="topic">2030 공급 부족을 대하는 우리의 자세</p>
+                <p><span class="speaker">박 합 수</span> <span class="affil">박합수부동산연구소 대표</span></p>
+              </td>
+            </tr>
+            <tr data-todo="시간 확정 필요">
+              <td class="time">15:10-15:30</td>
+              <td class="kind">가상자산</td>
+              <td class="content">
+                <p class="topic">토큰증권 시대의 새로운 투자방식</p>
+                <p><span class="speaker">김 남 웅</span> <span class="affil">포필러스 대표</span></p>
+              </td>
+            </tr>
+            <tr data-todo="시간 확정 필요">
+              <td class="time">15:30-15:40</td>
+              <td class="kind"></td>
+              <td class="content"><span class="plain">폐회</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="forum-program-note">※ 상기 프로그램은 행사 운영 및 연사 사정에 따라 일부 변경될 수 있습니다.</p>
       </div>
     </section>
 
     <!-- ============================================================
          4. REGISTRATION
-         사전등록 폼. 백엔드는 apps-script/Code.gs (Google Apps Script).
-         배포 후 발급되는 /exec URL을 js/main.js의 GAS_URL에 넣는다.
+         백엔드는 apps-script/Code.gs. 배포 후 발급되는 /exec URL을
+         js/main.js의 GAS_URL에 넣어야 실제 제출이 동작한다.
          ============================================================ -->
     <section class="forum-registration" id="registration">
-      <div class="forum-section-inner">
+      <div class="forum-registration-inner">
         <h2 class="forum-section-title">사전등록</h2>
-        <!-- TODO 참가신청 / 확인 탭 + 폼 -->
+
+        <div class="forum-registration-tabs" role="tablist">
+          <button type="button" class="forum-registration-tab is-active" data-tab="register" role="tab" aria-selected="true">포럼 참가신청</button>
+          <button type="button" class="forum-registration-tab" data-tab="lookup" role="tab" aria-selected="false">참가신청 확인</button>
+        </div>
+
+        <div class="forum-registration-panel" data-panel="register">
+          <form id="registrationForm" novalidate>
+            <p class="forum-consent-title">개인정보보호를 위한 이용자 동의사항</p>
+            <div class="forum-consent-box">
+              <ol class="consent-list">
+                <li>개인정보 수집 범위 : 이름, 소속, 직급, 연락처, 이메일, 주소</li>
+                <li>개인정보 수집 및 이용 목적 : 한국금융신문 주관 또는 제휴, 후원 행사 및 교육 관련 안내 활동(전화, 이메일) 및 뉴스레터 발송 목적</li>
+                <li>개인정보 보유 및 이용기간 : 개인정보는 수집 및 이용목적 달성시까지 보유하며, 수신을 원치않는 경우 지체 없이 파기하는 것을 원칙으로 함</li>
+              </ol>
+            </div>
+            <label class="forum-consent-check">
+              <input type="checkbox" id="f-agree">
+              개인정보보호를 위한 이용자 동의사항을 확인하였습니다.
+            </label>
+
+            <div class="forum-form-section">
+              <h3>신청인 정보</h3>
+              <div class="forum-form-grid">
+                <div class="forum-form-row">
+                  <div class="forum-form-field">
+                    <label for="f-name">성명<span class="req">*</span></label>
+                    <input type="text" id="f-name" name="name" placeholder="홍길동" required>
+                  </div>
+                  <div class="forum-form-field" aria-hidden="true"></div>
+                </div>
+                <div class="forum-form-row">
+                  <div class="forum-form-field">
+                    <label for="f-org">소속<span class="req">*</span></label>
+                    <input type="text" id="f-org" name="org" placeholder="소속을 입력해 주세요" required>
+                  </div>
+                  <div class="forum-form-field">
+                    <label for="f-rank">직급<span class="req">*</span></label>
+                    <input type="text" id="f-rank" name="rank" placeholder="직급을 입력해 주세요" required>
+                  </div>
+                </div>
+                <div class="forum-form-row">
+                  <div class="forum-form-field">
+                    <label for="f-tel">전화번호<span class="req">*</span></label>
+                    <input type="tel" id="f-tel" name="tel" placeholder="010-1234-5678" inputmode="tel" required>
+                  </div>
+                  <div class="forum-form-field">
+                    <label for="f-email">이메일<span class="req">*</span></label>
+                    <input type="email" id="f-email" name="email" placeholder="email@naver.com" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="forum-form-section">
+              <h3>(선택)사전 질문</h3>
+              <p class="forum-form-note">작성해주신 질문은 사전 검토 후 선정하여 연사에게 전달됩니다. 여러 연사에게 질문하실 경우 '[연사명] 질문내용' 형식으로 작성해 주시기 바랍니다.</p>
+              <textarea id="f-question" name="question" placeholder="질문내용을 작성해 주세요."></textarea>
+            </div>
+
+            <div class="forum-form-actions">
+              <button type="reset" class="btn-cancel">취소</button>
+              <button type="submit" class="btn-submit">참가신청</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="forum-registration-panel" data-panel="lookup" hidden>
+          <form id="lookupForm" novalidate>
+            <div class="forum-form-section">
+              <h3>신청인 정보</h3>
+              <div class="forum-form-grid">
+                <div class="forum-form-row">
+                  <div class="forum-form-field">
+                    <label for="lk-name">성명<span class="req">*</span></label>
+                    <input type="text" id="lk-name" placeholder="홍길동" required>
+                  </div>
+                  <div class="forum-form-field" aria-hidden="true"></div>
+                </div>
+                <div class="forum-form-row">
+                  <div class="forum-form-field">
+                    <label for="lk-tel">전화번호<span class="req">*</span></label>
+                    <input type="tel" id="lk-tel" placeholder="010-1234-5678" inputmode="tel" required>
+                  </div>
+                  <div class="forum-form-field" aria-hidden="true"></div>
+                </div>
+              </div>
+            </div>
+            <div class="forum-form-actions">
+              <button type="submit" class="btn-submit">확인</button>
+            </div>
+          </form>
+
+          <div id="lookupResult" class="forum-lookup-result" hidden>
+            <section class="forum-lookup-section">
+              <h3>신청인 정보</h3>
+              <dl class="forum-lookup-table">
+                <div><dt>성명</dt><dd data-field="name"></dd></div>
+                <div><dt>소속</dt><dd data-field="org"></dd></div>
+                <div><dt>직급</dt><dd data-field="rank"></dd></div>
+                <div><dt>전화번호</dt><dd data-field="tel"></dd></div>
+                <div><dt>이메일</dt><dd data-field="email"></dd></div>
+              </dl>
+            </section>
+            <section class="forum-lookup-section">
+              <h3>사전 질문</h3>
+              <p class="forum-lookup-question" data-field="question"></p>
+            </section>
+          </div>
+        </div>
+
+        <p class="forum-form-contact">
+          <span class="contact-label">※ 참가신청 관련 문의</span>
+          <span class="contact-info">
+            한국금융신문 한국금융포럼 사무국
+            <span class="contact-reach">{{registerPhone}} / {{registerEmail}}</span>
+          </span>
+        </p>
       </div>
     </section>
 
     <!-- ============================================================
          5. LOCATION
          ============================================================ -->
-    <section class="forum-location" id="location">
-      <div class="forum-section-inner">
-        <h2 class="forum-section-title">오시는 길</h2>
-        <!-- TODO 지도, 주소, 교통편 -->
+    <section class="forum-location" id="location" style="background-image: url(/images/location_bg.jpg);">
+      <div class="forum-location-inner">
+        <h2 class="forum-section-title">행사장 오시는 길</h2>
+
+        <div class="forum-map">
+          <iframe title="은행연합회 위치" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.579081259387!2d126.98129342695312!3d37.564979600000036!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca2ef936b3e39%3A0xd7bbe5738bf8e35b!2z7KCE6rWt7J2A7ZaJ7Jew7ZWp7ZqM!5e0!3m2!1sko!2skr!4v1775981735256!5m2!1sko!2skr" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+        <div class="forum-location-info">
+          <div class="row">
+            <div class="label">주소</div>
+            <div class="value">서울특별시 중구 명동 11길 19 (명동 1가)<br class="mobile-break"> 은행연합회 2층 국제회의장</div>
+          </div>
+          <div class="row">
+            <div class="label">전화</div>
+            <div class="value">02) 3705 - 5000</div>
+          </div>
+        </div>
+
+        <div class="forum-location-transport">
+          <div class="group">
+            <h4>버스 (을지로입구 하차)</h4>
+            <p>100(파랑), 105(파랑), 152(파랑), 202(파랑), 261(파랑), 408(파랑), 472(파랑)</p>
+          </div>
+          <div class="group">
+            <h4 class="subway">지하철</h4>
+            <p>2호선 을지로입구역 하차 (5번 출구), 4호선 명동역 하차 (6, 7번 출구)</p>
+          </div>
+        </div>
       </div>
     </section>
+
+    <!-- ============================================================
+         연사 프로필 모달 — 카드 클릭 시 data-* 값으로 채워진다
+         ============================================================ -->
+    <div class="forum-modal" id="speaker-modal" aria-hidden="true">
+      <div class="forum-modal-overlay" data-close></div>
+      <div class="forum-modal-content" role="dialog" aria-labelledby="speaker-modal-title" aria-modal="true">
+        <button class="forum-modal-close" type="button" data-close aria-label="닫기">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <div class="forum-modal-scroll">
+          <div class="forum-modal-top">
+            <div class="forum-modal-left">
+              <div class="forum-modal-photo">
+                <img id="speaker-modal-img" src="" alt="">
+              </div>
+            </div>
+            <div class="forum-modal-right">
+              <span class="forum-modal-badge" id="speaker-modal-badge"></span>
+              <h3 class="forum-modal-name" id="speaker-modal-title"></h3>
+              <p class="forum-modal-role" id="speaker-modal-role"></p>
+              <ul class="forum-modal-bio" id="speaker-modal-bio"></ul>
+            </div>
+          </div>
+          <div class="forum-modal-intro" id="speaker-modal-intro"></div>
+        </div>
+      </div>
+    </div>
 
   </main>
