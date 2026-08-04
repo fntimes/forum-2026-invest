@@ -26,7 +26,7 @@
 
 /* ========== 설정 ========== */
 var SHEET_NAME    = '사전등록';
-var NOTIFY_EMAILS = [];  // 예: ['forum@fntimes.com']
+var NOTIFY_EMAILS = ['forum@fntimes.com'];  // 빈 배열이면 메일 미발송
 var NOTIFY_SUBJECT_PREFIX = '[2026 투자포럼] 사전등록';
 
 var HEADERS = [
@@ -125,6 +125,45 @@ function _findRecord(name, tel) {
   return null;
 }
 
+/* ========== 수동 실행 도구 ========== */
+
+/**
+ * 헤더 행을 만들거나 복구한다.
+ * Apps Script 편집기에서 함수 목록에 'setupSheet'를 선택하고 실행하면 된다.
+ * - 헤더가 없으면 맨 위에 새 행을 끼워 넣는다 (기존 데이터는 그대로 밀린다)
+ * - 이미 헤더가 있으면 서식만 다시 적용한다
+ */
+function setupSheet() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
+
+  var hasHeader = false;
+  if (sh.getLastRow() >= 1) {
+    var first = sh.getRange(1, 1, 1, HEADERS.length).getValues()[0];
+    hasHeader = String(first[0]).trim() === HEADERS[0];
+  }
+  if (!hasHeader) {
+    sh.insertRowBefore(1);
+    sh.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+  }
+
+  sh.getRange(1, 1, 1, HEADERS.length)
+    .setFontWeight('bold')
+    .setBackground('#004aad')
+    .setFontColor('#ffffff')
+    .setHorizontalAlignment('center')
+    .setVerticalAlignment('middle');
+  sh.setFrozenRows(1);
+  sh.setRowHeight(1, 34);
+
+  var widths = [160, 100, 180, 100, 140, 220, 320, 70];
+  for (var i = 0; i < widths.length; i++) sh.setColumnWidth(i + 1, widths[i]);
+
+  SpreadsheetApp.getUi().alert(
+    hasHeader ? '헤더 서식을 다시 적용했습니다.' : '헤더 행을 추가했습니다.'
+  );
+}
+
 /* ========== 내부 함수 ========== */
 
 function _getSheet() {
@@ -138,7 +177,7 @@ function _getSheet() {
     sh.appendRow(HEADERS);
     sh.getRange(1, 1, 1, HEADERS.length)
       .setFontWeight('bold')
-      .setBackground('#00357a')
+      .setBackground('#004aad')
       .setFontColor('#ffffff');
     sh.setFrozenRows(1);
     sh.setColumnWidth(1, 160); // 제출일시

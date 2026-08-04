@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Registration form — Google Apps Script 연동 (iframe POST 방식)
-  var GAS_URL = 'TODO_APPS_SCRIPT_EXEC_URL'; // apps-script/Code.gs 배포 후 발급되는 /exec URL
+  var GAS_URL = 'https://script.google.com/macros/s/AKfycbzrJQcmR3f4saRwuXP3TBCdxApeR5fD3ixk3KkMZ5Vuw3RghOVs0P7KwO44FTd0qruK5Q/exec';
 
   // 전화번호 자동 포매팅 — 휴대폰·서울(02)·타 지역·대표번호(15XX) 지원
   function formatPhone(raw) {
