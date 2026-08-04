@@ -1609,17 +1609,22 @@ body.forum-modal-open { overflow: hidden; }
   /* === HERO === */
   /* margin-top을 두지 않는다 — 헤더 높이와 어긋나면 흰 띠가 생긴다.
      대신 inner의 위쪽 패딩으로 콘텐츠를 헤더 아래로 내린다. */
-  /* 시안(mobile_hero.png)의 세로 비율을 390px 화면 기준으로 환산한 값.
-     타이틀 306px, 일시장소 547px, 버튼 623px, 주최후원 745px 지점 */
+  /* 히어로를 한 화면에 담는다. 고정 높이(864px)로 두면 브라우저 UI가
+     차지하는 실제 기기에서 사전등록 버튼이 잘린다.
+     svh는 주소창을 제외한 높이라 iOS/안드로이드에서 잘리지 않는다. */
   .forum-hero {
     margin-top: 0;
-    height: 864px;
+    height: 100vh;                 /* 구형 브라우저 폴백 */
+    height: 100svh;
+    min-height: 560px;
+    max-height: 900px;
     --hero-bg-shift: 0%;
     --hero-bg-y: 50%;
   }
   .forum-hero-inner {
-    padding: 306px 20px 0;         /* 시안의 타이틀 위치 */
-    justify-content: flex-start;   /* 패딩으로 위치를 잡는다 */
+    /* 위는 헤더(88px), 아래는 주최/후원 영역을 비워두고 그 사이에 가운데 정렬 */
+    padding: 88px 20px 96px;
+    justify-content: center;
   }
   .forum-logo { display: flex; padding-bottom: 0; }
   .forum-logo .logo-mark { height: 26px; }
@@ -1632,7 +1637,7 @@ body.forum-modal-open { overflow: hidden; }
   .forum-hero-cta-label { font-size: 22px; gap: 12px; }
   /* 주최/후원은 로고 11개가 든 단일 이미지라 리플로우가 안 된다.
      좁은 화면에서는 폭을 꽉 채워 최대한 크게 보여준다. */
-  .forum-hero-orgs { bottom: 77px; padding: 0 20px; }
+  .forum-hero-orgs { bottom: 24px; padding: 0 20px; }
   .forum-hero-orgs img { width: 100%; }
 
   /* 세로형 배경 영상을 좌우로 확대해 알약 장식이 중앙에서 벌어지게 한다.
