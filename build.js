@@ -90,9 +90,14 @@ function buildPage(pagePath) {
   });
   html = html.replace(/\{\{[\w.-]+\}\}/g, '');
 
-  // Rewrite absolute paths to include BASE_PATH (for /forum/ subpath hosting)
+  // Rewrite absolute paths to include BASE_PATH (for /forum/ subpath hosting).
+  // href/src 외에 srcset과 JS가 읽는 data-* 경로까지 처리해야 한다.
+  // (data-src-desktop, data-src-mobile, data-image 등)
   if (BASE_PATH) {
-    html = html.replace(/(href|src)="\/(?!\/)/g, `$1="${BASE_PATH}/`);
+    html = html.replace(
+      /((?:href|src|srcset|data-image|data-src-desktop|data-src-mobile))="\/(?!\/)/g,
+      `$1="${BASE_PATH}/`
+    );
     html = html.replace(/url\(\/(?!\/)/g, `url(${BASE_PATH}/`);
   }
 
