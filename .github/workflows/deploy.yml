@@ -28,12 +28,9 @@ jobs:
         with:
           node-version: '20'
 
-      # 서브도메인 확정 전에는 https://fntimes.github.io/forum-2026-invest/ 로 배포한다.
-      # 커스텀 도메인이 정해지면 BASE_PATH를 지우고 루트에 CNAME 파일을 추가한다.
+      # 루트 CNAME(2026fif.fntimes.com)으로 배포하므로 BASE_PATH를 두지 않는다.
       - name: Build
         run: npm run build
-        env:
-          BASE_PATH: /forum-2026-invest
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
