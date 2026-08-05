@@ -499,7 +499,7 @@ body { margin: 0; padding: 0; }
   position: relative;
 }
 .forum-program .forum-section-inner { position: relative; z-index: 1; }
-.forum-program .forum-section-title { color: #fff; margin-bottom: 110px; }
+.forum-program .forum-section-title { color: #1a1a2e; margin-bottom: 110px; }
 
 .forum-program-table {
   width: 100%;
