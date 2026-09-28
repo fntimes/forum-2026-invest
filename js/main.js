@@ -273,6 +273,27 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   var regForm = document.getElementById('registrationForm');
+
+  // ===== 참가신청 마감 =====
+  // 마감 시각이 지나면 신청 폼을 숨기고 마감 안내를 보여준다 (조회 탭은 유지).
+  // 페이지를 열어둔 채 마감 시각을 넘겨도 전환되도록 타이머를 건다.
+  var REGISTRATION_DEADLINE = new Date('2026-09-28T18:00:00+09:00').getTime();
+  var regClosed = document.getElementById('registrationClosed');
+  function isRegistrationClosed() {
+    return Date.now() >= REGISTRATION_DEADLINE;
+  }
+  function closeRegistration() {
+    if (regForm) regForm.hidden = true;
+    if (regClosed) regClosed.hidden = false;
+  }
+  if (isRegistrationClosed()) {
+    closeRegistration();
+  } else {
+    var msLeft = REGISTRATION_DEADLINE - Date.now();
+    // setTimeout 최대 지연(약 24.8일)을 넘으면 즉시 실행되므로 그 경우엔 걸지 않는다
+    if (msLeft < 2147483647) setTimeout(closeRegistration, msLeft);
+  }
+
   if (regForm) {
     regForm.addEventListener('reset', function() {
       // reset 이벤트는 기본 reset 이후 폼 초기화가 끝난 다음 프레임에 스크롤
@@ -283,6 +304,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     regForm.addEventListener('submit', function(e) {
       e.preventDefault();
+
+      if (isRegistrationClosed()) {
+        alert('온라인 사전신청이 마감되었습니다.');
+        closeRegistration();
+        return;
+      }
 
       var agree = document.getElementById('f-agree');
       if (!agree.checked) {

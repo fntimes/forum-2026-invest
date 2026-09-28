@@ -268,6 +268,12 @@ extraScripts:
               <button type="submit" class="btn-submit">참가신청</button>
             </div>
           </form>
+
+          <!-- 마감 시각(js/main.js REGISTRATION_DEADLINE) 이후 JS가 폼 대신 노출 -->
+          <div class="forum-registration-closed" id="registrationClosed" role="status" hidden>
+            <p class="forum-registration-closed-title">온라인 사전신청이 마감되었습니다.</p>
+            <p class="forum-registration-closed-desc">관련 문의는 포럼사무국(<a href="tel:02-773-6300">&#9742; {{registerPhone}}</a>)으로 연락 바랍니다.</p>
+          </div>
         </div>
 
         <div class="forum-registration-panel" data-panel="lookup" hidden>
