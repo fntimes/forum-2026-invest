@@ -210,69 +210,9 @@ extraScripts:
         </div>
 
         <div class="forum-registration-panel" data-panel="register">
-          <form id="registrationForm" novalidate>
-            <p class="forum-consent-title">개인정보보호를 위한 이용자 동의사항</p>
-            <div class="forum-consent-box">
-              <ol class="consent-list">
-                <li>개인정보 수집 범위 : 이름, 소속, 직급, 연락처, 이메일, 주소</li>
-                <li>개인정보 수집 및 이용 목적 : 한국금융신문 주관 또는 제휴, 후원 행사 및 교육 관련 안내 활동(전화, 이메일) 및 뉴스레터 발송 목적</li>
-                <li>개인정보 보유 및 이용기간 : 개인정보는 수집 및 이용목적 달성시까지 보유하며, 수신을 원치않는 경우 지체 없이 파기하는 것을 원칙으로 함</li>
-              </ol>
-            </div>
-            <label class="forum-consent-check">
-              <input type="checkbox" id="f-agree">
-              개인정보보호를 위한 이용자 동의사항을 확인하였습니다.
-            </label>
-
-            <div class="forum-form-section">
-              <h3>신청인 정보</h3>
-              <div class="forum-form-grid">
-                <div class="forum-form-row">
-                  <div class="forum-form-field">
-                    <label for="f-name">성명<span class="req">*</span></label>
-                    <input type="text" id="f-name" name="name" placeholder="홍길동" required>
-                  </div>
-                  <div class="forum-form-field" aria-hidden="true"></div>
-                </div>
-                <div class="forum-form-row">
-                  <div class="forum-form-field">
-                    <label for="f-org">소속<span class="req">*</span></label>
-                    <input type="text" id="f-org" name="org" placeholder="소속을 입력해 주세요" required>
-                  </div>
-                  <div class="forum-form-field">
-                    <label for="f-rank">직급<span class="req">*</span></label>
-                    <input type="text" id="f-rank" name="rank" placeholder="직급을 입력해 주세요" required>
-                  </div>
-                </div>
-                <div class="forum-form-row">
-                  <div class="forum-form-field">
-                    <label for="f-tel">전화번호<span class="req">*</span></label>
-                    <input type="tel" id="f-tel" name="tel" placeholder="010-1234-5678" inputmode="tel" required>
-                  </div>
-                  <div class="forum-form-field">
-                    <label for="f-email">이메일<span class="req">*</span></label>
-                    <input type="email" id="f-email" name="email" placeholder="email@naver.com" required>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="forum-form-section">
-              <h3>(선택)사전 질문</h3>
-              <p class="forum-form-note">작성해주신 질문은 사전 검토 후 선정하여 연사에게 전달됩니다. 여러 연사에게 질문하실 경우 '[연사명] 질문내용' 형식으로 작성해 주시기 바랍니다.</p>
-              <textarea id="f-question" name="question" placeholder="질문내용을 작성해 주세요."></textarea>
-            </div>
-
-            <div class="forum-form-actions">
-              <button type="reset" class="btn-cancel">취소</button>
-              <button type="submit" class="btn-submit">참가신청</button>
-            </div>
-          </form>
-
-          <!-- 마감 시각(js/main.js REGISTRATION_DEADLINE) 이후 JS가 폼 대신 노출 -->
-          <div class="forum-registration-closed" id="registrationClosed" role="status" hidden>
+          <div class="forum-registration-closed" role="status">
             <p class="forum-registration-closed-title">온라인 사전신청이 마감되었습니다.</p>
-            <p class="forum-registration-closed-desc">관련 문의는 포럼사무국(<a href="tel:02-773-6300">&#9742; {{registerPhone}}</a>)으로 연락 바랍니다.</p>
+            <p class="forum-registration-closed-desc">9월 29일(화) 행사 당일, 현장 등록 후 입장하실 수 있습니다.</p>
           </div>
         </div>
 
